@@ -1,0 +1,31 @@
+<script>
+    console.log("Edit Script loaded and executed.");
+    function prepop_and_patch_override(event, data) {
+
+      // pre-populate fields for Edit Menu Items Form
+      // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+      var modal = $('#editMenuItem');
+      modal.find('#edit-menu-id').attr('value', data[event.target.value].menu_id);
+      modal.find('#edit-menu-name').attr('value', data[event.target.value].menu_name);
+      modal.find('#edit-price-per-unit').attr('value', data[event.target.value].price_per_unit);
+      modal.find('#edit-description').val(data[event.target.value].description);
+  
+      // Override POST with PATCH method
+      var form = $('#edit-menu-form');
+      form.attr('action', '/menu-items');
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + data[event.target.value].menu_id + '?' + '_method=PATCH');
+      }
+</script>
+  
+<script>
+    console.log("Delete Script loaded and executed.");
+    function delete_override(event, data) {
+      var form = $('#delete-menu-form');
+      form.attr('action', '/menu-items');
+
+      // Override POST with DELETE method
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + data[event.target.value].menu_id + '?' + '_method=DELETE');
+      }
+</script>

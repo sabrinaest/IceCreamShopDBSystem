@@ -1,0 +1,89 @@
+<%- include('header'); -%>
+<%- include('suborders_alert_helper'); -%>
+
+  <div class="container order-table">
+    <h1>Orders</h1>
+    <table class="table table-striped">
+
+      <%- include('order_button_and_instructions'); -%>
+
+      <div class="text-center mx-auto" style="width: 100%;">
+        
+        <hr>
+
+        <div class="text-right ml-auto">
+          <a href="/orders">Show all Orders</a>
+        </div>
+
+      </div>
+
+      <%# ORDER TABLE %>
+      <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+      
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Order Actions</th>
+          <th>Customer ID</th>
+          <th>Time of Sale</th>
+          <th>Order Subtotal</th>
+          <th>Order Tax</th>
+          <th>Order Total</th>
+          <th>Points Awarded</th>
+          <th>Suborder Actions</th>
+          <th>Suborders</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let innerCounter = 0; %>
+        <% let i = 0; %>
+        <% data.forEach(function(order) { %>
+          <tr>
+
+            <td class="align-middle col-1"><%= order.order_id %></td>
+
+            <td class="align-middle col-1 border">          
+              <button type="button" class="btn btn-sm bg-primary btn-same-size text-white m-1"  title="Change the customer this Order belongs to" data-toggle="modal" data-target="#editOrder" value="<%= i %>" onclick="prepop_and_patch_override(event, <%= JSON.stringify(data) %>)">Edit</button>
+              <button type="button" class="btn btn-sm btn-danger btn-same-size text-white m-1" data-toggle="modal" data-target="#deleteOrder" value="<%= i %>" onclick="delete_override(event, <%= JSON.stringify(data) %>)">Delete</button>       
+            </td>
+
+            <td class="align-middle col-1"><%= order.customer_id %></td>
+            <td class="align-middle col-1"><%= new Date(order.time_of_sale).toLocaleDateString() %> <%= new Date(order.time_of_sale).toLocaleTimeString([], {timeStyle: 'short'}) %></td>
+            <td class="align-middle col-1"><%= `$${order.order_subtotal.toFixed(2)}` %></td>
+            <td class="align-middle col-1"><%= `$${order.order_tax.toFixed(2)}` %></td>
+            <td class="align-middle col-1"><%= `$${order.order_total.toFixed(2)}` %></td>
+            <td class="align-middle col-1"><%= order.points_awarded %></td>
+            
+
+            <td class="align-middle border">
+              <button type="button" class="btn btn-sm bg-warning btn-same-size text-white m-1" data-toggle="modal" data-target="#addSuborder" value="<%= i %>" onclick="add_form_logic_handler(event, <%= JSON.stringify(data) %>)">Add</button>
+              <button type="button" class="btn btn-sm bg-primary btn-same-size text-white m-1" title="Select a suborder first, then click the edit button" data-toggle="modal" data-target="#editSuborder" value="<%= i %>" onclick="edit_form_logic_handler(event, <%= JSON.stringify(suborder_data) %>)">Edit</button>
+              <button type="button" class="btn btn-sm btn-danger btn-same-size text-white m-1" title="Select a suborder first, then click the delete button" data-toggle="modal" data-target="#deleteSuborder" value="<%= i %>" onclick="delete_form_logic_handler(event, <%= JSON.stringify(suborder_data) %>)">Delete</button>       
+            </td>
+
+            <td class="align-middle col-3">
+              <select class="form-control btn btn-outline-primary" id="suborder-option-<%= i %>" name="suborder-option">
+                <option value="" selected disabled>Select</option>
+                  <% for (let j = 0; j < order.suborder_count; j++) { %>
+                    <option value="<%= JSON.stringify([innerCounter, suborder_data[innerCounter].suborder_item_id]) %>"><%= `${suborder_data[innerCounter].menu_name}, ${suborder_data[innerCounter].flavor_name}, ${suborder_data[innerCounter].container_name}, QTY: ${suborder_data[innerCounter].quantity_ordered}` %></option>
+                    <%  innerCounter++; %>
+                  <% } %>
+            </td>
+
+          </tr> 
+          <% i++; %>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <%- include('orders_modal_forms'); -%>
+  <%- include('orders_helpers'); -%>
+  <%- include('suborders_modal_forms'); -%>
+  <%- include('suborders_add_helper'); -%>
+  <%- include('suborders_calculate_subtotal'); -%>
+  <%- include('suborders_edit_helper'); -%>
+  <%- include('suborders_delete_helper'); -%>
+ 
+
+<%- include('footer'); -%>

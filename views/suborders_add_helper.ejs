@@ -1,0 +1,27 @@
+<script>
+    console.log("Add Suborder Script loaded and executed V2.");
+    
+    function add_form_logic_handler(event, data) {
+      
+      // pre-populates order ID to suborder form
+      var modal = $('#addSuborder');
+      modal.find('#add-order-id').attr('value', data[event.target.value].order_id);
+  
+      suborder_form_reset(modal);
+      
+      // changes suborder total upon changes to container, menu item or quantity.
+      // disables container field when "Shake" is selected
+      event_listeners (modal, "add")
+     };
+
+     // helper
+    function suborder_form_reset(modal) {
+      modal.find('#add-menu-item').val("");
+      modal.find('#add-flavor').val("");
+      modal.find('#add-container').val("");
+      modal.find('#add-quantity-ordered').val("");
+      modal.find('#add-subtotal').val("");
+    };
+
+  </script>
+  <%- include('subtotal_event_listeners'); -%>

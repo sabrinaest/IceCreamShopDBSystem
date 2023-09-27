@@ -1,0 +1,45 @@
+
+<%# Error Message -- dupe suborder -- POPUP Handler%>
+
+<% if (showAlert && showAlert !== 'success') { %>
+  
+    <div id="errorModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">Edit Error: Duplicate Entry</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        <%= showAlert %>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+    
+    <script>
+
+      
+      document.addEventListener("DOMContentLoaded", function() {
+        var modal = document.getElementById("errorModal");
+        modal.style.display = "block";
+        
+         // Makes the close button functional -- exits out of modal
+         var closeButton = document.querySelector("#errorModal .close");
+        closeButton.addEventListener("click", function() {
+          document.getElementById("errorModal").style.display = "none";
+        });
+  
+        // For added accessibility -- exits out of modal when click outside of modal form
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };  
+    });
+    </script>
+  <% } %>

@@ -1,0 +1,30 @@
+<script>
+    console.log("Edit Script loaded and executed.");
+    function prepop_and_patch_override(event, data) {
+      
+      // pre-populate fields for Edit Flavor Form
+      // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+      var modal = $('#editFlavor');
+      modal.find('#edit-flavor-id').attr('value', data[event.target.value].flavor_id);
+      modal.find('#edit-flavor-name').attr('value', data[event.target.value].flavor_name);
+      modal.find('#edit-qty-in-stock').attr('value', data[event.target.value].qty_in_stock);
+      
+      // Override POST with PATCH method
+      var form = $('#edit-flavor-form');
+      form.attr('action', '/flavors');
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + data[event.target.value].flavor_id + '?' + '_method=PATCH');
+      }
+</script>
+  
+<script>
+    console.log("Delete Script loaded and executed.");
+    function delete_override(event, data) {
+      var form = $('#delete-flavor-form');
+      form.attr('action', '/flavors');
+
+      // Override POST with DELETE method
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + data[event.target.value].flavor_id + '?' + '_method=DELETE');
+      }
+</script>

@@ -1,0 +1,152 @@
+<%- include('header'); -%>
+
+
+  <div class="container flavor-table">
+    <h1>Flavors</h1>
+    <table class="table table-striped">
+
+
+      <%# ADD FLAVOR BUTTON %>
+
+      <button type="button" class="btn btn-lg bg-warning text-white" data-toggle="modal" data-target="#addFlavor">Add Flavor</button>
+
+      <div class="text-center mx-auto" style="width: 100%;">
+        <hr>
+      </div>
+
+        <thead>
+          <tr>
+            <th>Flavor ID</th>
+            <th>Flavor Name</th>
+            <th class="col-2">Quantity in Stock (approx scoops)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% let i = 0; %>
+          <% data.forEach(function(flavor) { %>
+            <tr>
+              <td><%= flavor.flavor_id %></td>
+              <td><%= flavor.flavor_name %></td>
+              <td><%= flavor.qty_in_stock %></td>
+              <td class="border">
+                <button type="button" class="btn btn-sm bg-primary btn-same-size text-white" data-toggle="modal" data-target="#editFlavor" value="<%= i %>" onclick="prepop_and_patch_override(event, <%= JSON.stringify(data) %>)">Edit</button>
+                <button type="button" class="btn btn-sm btn-danger btn-same-size text-white" data-toggle="modal" data-target="#deleteFlavor" value="<%= i %>" onclick="delete_override(event, <%= JSON.stringify(data) %>)">Delete</button>       
+              </td>
+            </tr>
+            <% i++; %>
+          <% }); %>
+        </tbody>
+      </table>
+  </div>
+
+  <%# ADD FLAVOR FORM POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="addFlavor" tabindex="-1" role="dialog" aria-labelledby="addFlavor" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addFlavorLabel">Add Flavor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+          <form action="/flavors" method="POST">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="add-flavor-name" class="col-form-label">Flavor Name:</label>
+                <input type="text" class="form-control" id="add-flavor-name" name="flavor_name" placeholder="Enter Flavor Name (e.g. Rocky Road)" required> 
+              </div>
+              
+              <div class="form-group">
+                <label for="add-qty-in-stock" class="col-form-label">Quantity in Stock:</label>
+                <input type="number" step="1" class="form-control" id="add-qty-in-stock" min="0" name="qty_in_stock" placeholder="Enter Quantity in Stock (e.g. 300)" required> 
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Confirm Add Flavor</button>
+            </div>
+          </form>
+
+      </div>
+    </div>
+  </div>
+
+  <%# EDIT FLAVOR FORM POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="editFlavor" tabindex="-1" role="dialog" aria-labelledby="editFlavor" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editFlavorLabel">Edit Flavor</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+            
+          <form action="/flavors" method="POST" id="edit-flavor-form" enctype="application/x-www-form-urlencoded">
+            
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="edit-flavor-id" class="col-form-label">Flavor ID:</label>
+                <input type="text" class="form-control" id="edit-flavor-id" name="flavor_id" disabled> 
+              </div>
+
+              <div class="form-group">
+                <label for="edit-flavor-name" class="col-form-label">Flavor Name:</label>
+                <input type="text" class="form-control" id="edit-flavor-name" name="flavor_name" required> 
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-qty-in-stock" class="col-form-label">Quantity in Stock:</label>
+                <input type="number" step="1" min="0" class="form-control" id="edit-qty-in-stock" name="qty_in_stock" required> 
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success" id="confirm-edit-button">Confirm Edit Flavor</button>
+            </div>
+          </form>
+
+      </div>
+    </div>
+  </div>
+
+  <%# DELETE FLAVOR POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="deleteFlavor" tabindex="-1" role="dialog" aria-labelledby="deleteFlavor-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteFlavor-label">Confirm Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          Are you sure you want to delete this flavor?
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <form action="/flavors" method="POST" id="delete-flavor-form">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+<%- include('flavors_helpers'); -%>
+<%- include('footer'); -%>

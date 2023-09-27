@@ -1,0 +1,193 @@
+<%# ADD SUBORDER FORM POPUP %>
+<%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="addSuborder" tabindex="-1" role="dialog" aria-labelledby="addSuborder" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSuborderLabel">Add Suborder</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      
+  
+          <form action="/suborders" method="POST">
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="add-order-id" class="col-form-label">Order ID:</label>
+                <input type="text" step="1" class="form-control" id="add-order-id" name="order_id" readonly> 
+              </div>
+
+              <div class="form-group">
+                <label for="add-menu-item" class="col-form-label">Menu Item:</label>
+                <select class="form-control btn btn-outline-primary" id="add-menu-item" name="menu_id" required>
+                  <option value="" selected disabled>Select Menu Item</option>
+                  <% menu_data.forEach(function(menu) { %>
+                  <option value="<%= JSON.stringify([menu.menu_id, menu.price_per_unit, menu.menu_name]) %>"><%= menu.menu_name %></option>
+                  <% }); %>
+                </select>
+              </div>
+        
+              
+              <div class="form-group">
+                <label for="add-flavor" class="col-form-label">Flavor:</label>
+                <select class="form-control btn btn-outline-primary" id="add-flavor" name="flavor_id" required>
+                  <option value="" selected disabled>Select Flavor</option>
+                  <% flavor_data.forEach(function(flavor) { %>
+                  <option value="<%= flavor.flavor_id %>"><%= flavor.flavor_name %></option>
+                  <% }); %>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="add-container" class="col-form-label">Container:</label>
+                  <select class="form-control btn btn-outline-primary" id="add-container" name="container_id" required>
+                    <option value="" selected disabled>Select Container</option>
+                    <% container_data.forEach(function(container) { %>
+                    <option value="<%= JSON.stringify([container.container_id, container.price_per_unit]) %>"><%= container.container_name %></option>
+                    <% }); %>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="add-quantity-ordered" class="col-form-label">Quantity Ordered:</label>
+                <select class="form-control btn btn-outline-primary" id="add-quantity-ordered" name="quantity_ordered" required>
+                  <option value="" selected disabled>Select Quantity</option>
+                  <% for (let i = 1; i <= 10; i++) { %>
+                    <option value="<%= i %>"><%= i %></option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="add-subtotal" class="col-form-label">Subtotal:</label>
+                  <input type="text" class="form-control text-center" id="add-subtotal" name="subtotal" readonly required>
+              </div>
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-info text-white" title="Choose this button to continue adding more suborders to this Order" name="action" value="1">Save and Add More</button>
+              <button type="submit" class="btn btn-success" title="Choose this button to go back to all Orders" name="action" value="2">Save and Exit</button>
+            </div>
+          </form>
+
+      </div>
+    </div>
+  </div>
+  
+  <%# EDIT SUBORDER FORM POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="editSuborder" tabindex="-1" role="dialog" aria-labelledby="editSuborder" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSuborderLabel">Edit Suborder</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+          <form action="/suborders" method="POST" id="edit-suborder-form" enctype="application/x-www-form-urlencoded">
+            <div class="modal-body">
+              
+              <div class="form-group">
+                <label for="edit-order-id" class="col-form-label">Order ID:</label>
+                <input type="text" step="1" class="form-control" id="edit-suborder-order-id" name="order_id" readonly> 
+              </div>
+
+              <div class="form-group">
+                <label for="edit-suborder-id" class="col-form-label">Suborder ID:</label>
+                <input type="text" step="1" class="form-control" id="edit-suborder-id" name="suborder_item_id" readonly> 
+              </div>
+
+              <div class="form-group">
+                <label for="edit-menu-item" class="col-form-label">Menu Item:</label>
+                <select class="form-control btn btn-outline-primary" id="edit-menu-item" name="menu_id" required>
+                  <option value="" selected disabled>Select Menu Item</option>
+                  <% menu_data.forEach(function(menu) { %>
+                  <option value="<%= JSON.stringify([menu.menu_id, menu.price_per_unit, menu.menu_name]) %>"><%= menu.menu_name %></option>
+                  <% }); %>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-flavor" class="col-form-label">Flavor:</label>
+                <select class="form-control btn btn-outline-primary" id="edit-flavor" name="flavor_id" required>
+                  <option value="" selected disabled>Select Flavor</option>
+                  <% flavor_data.forEach(function(flavor) { %>
+                  <option value="<%= flavor.flavor_id %>"><%= flavor.flavor_name %></option>
+                  <% }); %>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="edit-container" class="col-form-label">Container:</label>
+                  <select class="form-control btn btn-outline-primary" id="edit-container" name="container_id" required>
+                    <option value="" selected disabled>Select Container</option>
+                    <% container_data.forEach(function(container) { %>
+                    <option value="<%= JSON.stringify([container.container_id, container.price_per_unit]) %>"><%= container.container_name %></option>
+                    <% }); %>
+                  </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-quantity-ordered" class="col-form-label">Quantity Ordered:</label>
+                <select class="form-control btn btn-outline-primary" id="edit-quantity-ordered" name="quantity_ordered" required>
+                  <% for (let i = 1; i <= 10; i++) { %>
+                    <option value="<%= i %>"><%= i %></option>
+                  <% } %>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="edit-subtotal" class="col-form-label">Subtotal:</label>
+                  <input type="text" class="form-control text-center" id="edit-subtotal" name="subtotal" readonly required>
+              </div>      
+            </div>
+        
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-info text-white" title="Choose this button to continue editing more suborders from this Order" name="action" value="1">Save and Edit More</button>
+              <button type="submit" class="btn btn-success" id="confirm-edit-button" title="Choose this button to go back to all Orders" name="action" value="2">Save and Exit</button>
+            </div>
+          </form>
+
+      </div>
+    </div>
+  </div>
+
+  <%# DELETE SUBORDER POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="deleteSuborder" tabindex="-1" role="dialog" aria-labelledby="deleteSuborder-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteSuborder-label">Confirm Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          Are you sure you want to delete this suborder?
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <form action="/suborders" method="POST" id="delete-suborders-form">
+            <button type="submit" class="btn btn-info text-white" title="Choose this button to continue deleting more suborders from this Order" name="action" value="1">Delete More Suborders</button>
+            <button type="submit" class="btn btn-danger" title="Choose this button to go back to all Orders" name="action" value="2">Delete and Exit</button>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>

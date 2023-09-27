@@ -1,0 +1,30 @@
+
+<script>
+
+    // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+    function calcSubtotal(event, mode) {
+            
+      var modal = $(`#${mode}Suborder`);
+
+      // Get menu item price
+      const menuItemSelect = document.getElementById(`${mode}-menu-item`);
+      const menu_price = JSON.parse(menuItemSelect.value)[1]
+      
+      // Get container price if applicable (A shake has no container)
+      const containerSelect = document.getElementById(`${mode}-container`);
+      let container_price = 0
+
+      if (typeof containerSelect.value[1] !== "undefined") {
+        container_price = JSON.parse(containerSelect.value)[1]
+      }
+
+      // Get quantity value and calculate total
+      const qty = document.getElementById(`${mode}-quantity-ordered`).value;
+      console.log(`quantity is ${qty}`)
+      total = (menu_price + container_price) * qty
+      const formattedTotal = total.toFixed(2);
+      
+      // assign subtotal field with total
+      modal.find(`#${mode}-subtotal`).val(formattedTotal);
+    };
+</script>

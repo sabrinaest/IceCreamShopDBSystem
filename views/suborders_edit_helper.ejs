@@ -1,0 +1,64 @@
+<script>
+  console.log("Edit Suborder Script loaded and executed.");
+  function edit_form_logic_handler(event, suborder_data) {
+    
+    const suborderOption = document.getElementById("suborder-option-" + event.target.value);
+    
+    // If no suborder is selected, modal form will not popup
+    if (suborderOption.value === "") {
+      preventEditPopup(event);
+      return
+      };
+    
+    var modal = $('#editSuborder');
+    const array = JSON.parse(suborderOption.value)
+    const suborderID = suborder_data[array[0]].suborder_item_id
+    prepopulate_edit_form(modal, array, suborder_data, suborderID);
+    
+    // Override POST with PATCH method
+    patch_override(suborderID);
+    
+    // changes suborder total upon changes to container, menu item or quantity.
+    // disables container field when "Shake" is selected
+    event_listeners(modal, "edit")
+
+    }
+
+    // helper
+    function preventEditPopup(event){
+        alert("Please select a suborder option to edit");
+        event.stopPropagation();
+    }
+
+    // helper
+    // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+    function prepopulate_edit_form(modal, array, suborder_data, suborder_id){
+      const orderID = suborder_data[array[0]].order_id
+      const suborderID = suborder_id
+      const menuItem = [suborder_data[array[0]].menu_id, suborder_data[array[0]].menu_price, `${suborder_data[array[0]].menu_name}`]
+      const menuItemValue = `[${menuItem[0]},${menuItem[1]},"${menuItem[2]}"]`;
+      const flavor = suborder_data[array[0]].flavor_id
+      const container = [suborder_data[array[0]].container_id, suborder_data[array[0]].cont_price]
+      const quantity = suborder_data[array[0]].quantity_ordered
+      const subtotal = suborder_data[array[0]].subtotal
+      
+
+      modal.find('#edit-suborder-order-id').attr('value', orderID);
+      modal.find('#edit-suborder-id').attr('value', suborderID);
+      modal.find("#edit-menu-item").val(menuItemValue);
+      modal.find('#edit-flavor').val(flavor);
+      modal.find('#edit-container').val(`[${container}]`);
+      modal.find('#edit-quantity-ordered').val(quantity);
+      modal.find('#edit-subtotal').attr('value', subtotal);    
+    };
+
+    // helper
+    function patch_override(suborderID){
+      var form = $('#edit-suborder-form');
+      form.attr('action', '/suborders');
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + suborderID + '?' + '_method=PATCH');
+    }
+</script>
+
+   <%- include('subtotal_event_listeners'); -%>

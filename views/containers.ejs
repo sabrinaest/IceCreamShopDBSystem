@@ -1,0 +1,168 @@
+<%- include('header'); -%>
+
+
+  <div class="container">
+    <h1>Containers</h1>
+    <table class="table table-striped">
+
+      <%# ADD CONTAINER BUTTON %>
+
+      <button type="button" class="btn btn-lg bg-warning text-white" data-toggle="modal" data-target="#addContainer">Add Container</button>
+
+      <div class="text-center mx-auto" style="width: 100%;">
+        <hr>
+      </div>
+
+      <thead>
+        <tr>
+          <th>Container ID</th>
+          <th>Container Name</th>
+          <th>Price per Unit</th>
+          <th>Qty in Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let i = 0; %>
+        <% data.forEach(function(container) { %>
+          <tr>
+            <td><%= container.container_id %></td>
+            <td><%= container.container_name %></td>
+            <td><%= `$${container.price_per_unit.toFixed(2)}` %></td>
+            <td><%= container.qty_in_stock %></td>
+            <td class="border">
+              <button type="button" class="btn btn-sm bg-primary btn-same-size text-white" data-toggle="modal" data-target="#editContainer" value="<%= i %>" onclick="prepop_and_patch_override(event, <%= JSON.stringify(data) %>)">Edit</button>
+              <button type="button" class="btn btn-sm btn-danger btn-same-size text-white" data-toggle="modal" data-target="#deleteContainer" value="<%= i %>" onclick="delete_override(event, <%= JSON.stringify(data) %>)">Delete</button>       
+            </td>
+          </tr>
+          <% i++; %>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <%# ADD CONTAINER FORM POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="addContainer" tabindex="-1" role="dialog" aria-labelledby="addContainer" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="addContainerLabel">Add Container</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+  
+          <form action="/containers" method="POST">
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="add-container-name" class="col-form-label">Container Name:</label>
+                <input type="text" class="form-control" id="add-container-name" name="container_name" placeholder="Enter Container Name (e.g. Cup, Cone)" required> 
+              </div>
+              
+              <div class="form-group">
+                <label for="add-price-per-unit" class="col-form-label">Price per Unit:</label>
+                <input type="number" step="0.01" class="form-control" min="0" id="add-price-per-unit" name="price_per_unit" placeholder="Enter Price per unit (e.g. 5.00)" required> 
+              </div>
+
+              <div class="form-group">
+                <label for="add-qty-in-stock" class="col-form-label">Quantity in Stock:</label>
+                <input type="number" step="1" class="form-control" min="0" id="add-qty-in-stock" name="qty_in_stock" placeholder="Enter Quantity in Stock (e.g. 300)" required> 
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Confirm Add Container</button>
+            </div>
+
+          </form>
+
+      </div>
+    </div>
+  </div>
+  
+  <%# EDIT CONTAINER FORM POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+  <div class="modal fade" id="editContainer" tabindex="-1" role="dialog" aria-labelledby="editContainer" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="editContainerLabel">Edit Container</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          
+          <form action="/containers" method="POST" id="edit-container-form" enctype="application/x-www-form-urlencoded">
+            
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="edit-container-id" class="col-form-label">Container ID:</label>
+                <input type="text" class="form-control" id="edit-container-id" name="container_id" disabled> 
+              </div>
+
+              <div class="form-group">
+                <label for="edit-container-name" class="col-form-label">Container Name:</label>
+                <input type="text" class="form-control" id="edit-container-name" name="container_name" required> 
+              </div>
+              
+              <div class="form-group">
+                <label for="edit-price-per-unit" class="col-form-label">Price per Unit:</label>
+                <input type="number" step="0.01" min="0" class="form-control" id="edit-price-per-unit" name="price_per_unit" required> 
+              </div>
+
+              <div class="form-group">
+                <label for="edit-qty-in-stock" class="col-form-label">Quantity in Stock:</label>
+                <input type="number" step="1" min="0" class="form-control" id="edit-qty-in-stock" name="qty_in_stock" required> 
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success" id="confirm-edit-button">Confirm Edit Container</button>
+            </div>
+
+          </form>
+
+      </div>
+    </div>
+  </div>
+
+  <%# DELETE CONTAINER POPUP %>
+  <%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+  
+  <div class="modal fade" id="deleteContainer" tabindex="-1" role="dialog" aria-labelledby="deleteContainer-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteContainer-label">Confirm Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          Are you sure you want to delete this container?
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <form action="/containers" method="POST" id="delete-container-form">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+<%- include('containers_helpers'); -%>
+<%- include('footer'); -%>

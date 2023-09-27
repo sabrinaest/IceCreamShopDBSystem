@@ -1,0 +1,36 @@
+<script>
+
+function event_listeners(modal, mode) {
+    const menuItemSelect = document.getElementById(`${mode}-menu-item`);
+    const containerSelect = document.getElementById(`${mode}-container`);
+    const addQtyInput = document.getElementById(`${mode}-quantity-ordered`);
+
+    menuItemSelect.addEventListener('change', function() {
+      handle_disable_container_logic (modal, menuItemSelect, mode);
+      calcSubtotal({ target: menuItemSelect }, mode);
+    });
+    
+    containerSelect.addEventListener('change', function() {
+      calcSubtotal({ target: containerSelect }, mode);
+    });
+
+    addQtyInput.addEventListener('change', function() {
+      calcSubtotal({ target: addQtyInput }, mode);
+    });
+  };
+
+      // helper
+      function handle_disable_container_logic(modal, menuItemSelect, mode) {
+      // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+      // Handles disabling the containers field when Menu Item: Shake is selected. 
+        if (JSON.parse(menuItemSelect.value)[2] === "Shake") {
+          modal.find(`#${mode}-container`).val("");
+          modal.find(`#${mode}-container`).prop('disabled', true);
+        } else {
+          modal.find(`#${mode}-container`).val("");
+          modal.find(`#${mode}-container`).prop('disabled', false);
+        }
+    };
+</script>
+
+<%- include('suborders_calculate_subtotal'); -%>

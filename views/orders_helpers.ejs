@@ -1,0 +1,63 @@
+
+<%# Handles prepopulating time of sale field with current date/time value %>
+<script>
+    
+    console.log("Order Add Script loaded and executed.");
+    var now = new Date();
+
+    // Format date/time in YYYY-MM-DDTHH:mm format. Required 'sv-SE' locale due to its use of '-' delimiters so it can properly prepopulate time of sale field.
+    var formattedDate = now.toLocaleString('sv-SE', { timeZone: 'PST', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(' ', 'T');
+    
+    // Set the time input field value to the formatted date and time
+    document.getElementById("add-time-of-sale").value = formattedDate;
+</script>
+
+
+
+<script>
+      console.log("Order Edit Script loaded and executed.");
+      function prepop_and_patch_override(event, data) {
+        
+        const format_date = new Date(data[event.target.value].time_of_sale);
+        const options = { 
+          month: '2-digit', 
+          day: '2-digit', 
+          year: 'numeric', 
+          hour: '2-digit', 
+          minute:'2-digit', 
+          hour12: true,
+          hourCycle: 'h12'
+        }; 
+        const dateString = format_date.toLocaleDateString('en-US', options);
+        
+        // pre-populate fields for Edit Order Form
+        // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+        var modal = $('#editOrder');
+        modal.find('#edit-order-id').attr('value', data[event.target.value].order_id);
+        modal.find('#edit-customer-id').val(data[event.target.value].customer_id);
+        modal.find('#edit-time-of-sale').attr('value', dateString);
+        modal.find('#edit-order-subtotal').attr('value', data[event.target.value].order_subtotal);
+        modal.find('#edit-order-tax').attr('value', data[event.target.value].order_tax);
+        modal.find('#edit-order-total').attr('value', data[event.target.value].order_total);
+        modal.find('#edit-points-awarded').attr('value', data[event.target.value].points_awarded);
+        
+
+        // Override POST with PATCH method
+        var form = $('#edit-order-form');
+        form.attr('action', '/orders');
+        var formAction = form.attr('action');
+        form.attr('action', formAction + '/' + data[event.target.value].order_id + '?' + '_method=PATCH');
+        }
+    </script>
+    
+    <script>
+      console.log("Order Delete Script loaded and executed.");
+      function delete_override(event, data) {
+        var form = $('#delete-order-form');
+        form.attr('action', '/orders');
+        
+        // Override POST with DELETE method
+        var formAction = form.attr('action');
+        form.attr('action', formAction + '/' + data[event.target.value].order_id + '?' + '_method=DELETE');
+        }
+    </script>

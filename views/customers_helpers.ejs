@@ -1,0 +1,64 @@
+<%# Handles restricting Phone Number field to pattern ###-###-#### %>
+<%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      new Cleave("#add-phone-number", {
+        delimiters: ["-"],
+        blocks: [3, 3, 4],
+        numericOnly: true,
+      });
+
+      new Cleave("#edit-phone-number", {
+        delimiters: ["-"],
+        blocks: [3, 3, 4],
+        numericOnly: true,
+      });
+    });
+</script>
+  
+<%# Resets Add Customer Form Modal %>
+<%# This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021) %>
+
+<script>
+    $(document).ready(function () {
+    $("#addCustomer").on("hidden.bs.modal", function () {
+      $("#add-customer-form")[0].reset();
+    });
+  });
+</script>
+  
+
+<script>
+    console.log("Edit script loaded and executed.");
+    function prepop_and_patch_override(event, data) {
+
+      // pre-populate fields for Edit Customer Form
+      // This code was adapted from a snippet provided by ChatGPT (OpenAI, 2021)
+      var modal = $('#editCustomer');
+      modal.find('#edit-customer-id').attr('value', data[event.target.value].customer_id);
+      modal.find('#edit-first-name').attr('value', data[event.target.value].first_name);
+      modal.find('#edit-last-name').attr('value', data[event.target.value].last_name);
+      modal.find('#edit-reward-points').attr('value', data[event.target.value].reward_point_total);
+      modal.find('#edit-total-sale').attr('value', data[event.target.value].total_sale);
+      modal.find('#edit-phone-number').attr('value', data[event.target.value].phone_number);
+        
+      // Override POST with PATCH method
+      var form = $('#edit-customer-form');
+      form.attr('action', '/customers');
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + data[event.target.value].customer_id + '?' + '_method=PATCH');
+      }
+</script>
+  
+<script>
+    console.log("Delete Script loaded and executed.");
+    function delete_override(event, data) {
+      var form = $('#delete-customer-form');
+      form.attr('action', '/customers');
+
+      // Override POST with DELETE method
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + data[event.target.value].customer_id + '?' + '_method=DELETE');
+      }
+</script>

@@ -1,0 +1,36 @@
+<script>
+    console.log("Delete Suborder Script loaded and executed.");
+    function delete_form_logic_handler(event, suborder_data) {
+      
+      const suborderOption = document.getElementById("suborder-option-" + event.target.value);
+      
+      // If no suborder is selected, modal form will not popup
+      if (suborderOption.value === "") {
+        preventDeletePopup(event);
+        return
+        };
+      
+      // Override POST with DELETE method
+      delete_override(suborderOption, suborder_data);
+    
+      }
+
+    // helper
+    function preventDeletePopup(event){
+        alert("Please select a suborder option to delete");
+        event.stopPropagation();
+    }
+
+    function delete_override(suborderOption, suborder_data){
+      const array = JSON.parse(suborderOption.value)
+      const OrderID = suborder_data[array[0]].order_id
+      const SuborderID = suborder_data[array[0]].suborder_item_id
+      
+      var form = $('#delete-suborders-form');
+      form.attr('action', '/suborders');
+
+      var formAction = form.attr('action');
+      form.attr('action', formAction + '/' + OrderID + '/' + SuborderID + '?' + '_method=DELETE');
+    }
+
+  </script>

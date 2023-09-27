@@ -38,47 +38,49 @@ Sunshine Scoops is a database-driven website developed for managing an ice cream
    cd SunshineScoops
    ```
 
-4. Install Dependencies:
+3. Install Dependencies:
 
    ```
    npm install
    ```
 
-5. Setup Database:
+4. Setup Database:
    * Launch you database management tool (eg. phpMyAdmin).
    * Create a new database named 'sunshinescoops'.
    * Import the provided DDL and DML scripts to structure and populate the database.
 
-6. Configure Database Connector:
-   * Locate the 'db-connector.js' file located in the database folder
+5. Configure Database Connector:
+   * Locate the 'db-connector.js' file located in the database folder.
    * Fill in your MySQL 'username' and 'password' in the following section:
-     ```
+     ```javascript
      const pool = mysql.createPool({
      connectionLimit : 10,
      host            : 'localhost',
      user            : 'YOUR_MYSQL_USERNAME',
      password        : 'YOUR_MYSQL_PASSWORD'',
      database        : 'sunshinescoops'
+     });
      ```
      
    * For example if your username is 'yourname123' and password is 'password567' then it should look like this:
-     ```
+     ```javascript
      const pool = mysql.createPool({
      connectionLimit : 10,
      host            : 'localhost',
      user            : 'yourname123',
      password        : 'password567',
      database        : 'sunshinescoops'
+     });
      ```
 
    * Don't forget to save your changes!
 
-7. Start the application:
+6. Start the application:
 
    ```
    node app.js
    ```
 
-8. Launch your preferred browser and visit http://localhost:52990/ to interact with Sunshine Scoops!
+7. Launch your preferred browser and visit http://localhost:52990/ to interact with Sunshine Scoops!
    
 ## 📚 Documentation & References

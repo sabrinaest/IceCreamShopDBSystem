@@ -6,7 +6,9 @@ https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/8ba604d6-648
 
 ## ✨ Features
 
-## 📐 Database Schema
+## 📐 Database Design
+
+![database-portfolio drawio](https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/868bfc80-7168-4673-9e8f-a73853beaa5d)
 
 ## 🛠️ Setup and Installation
 

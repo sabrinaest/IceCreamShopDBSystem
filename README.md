@@ -1,4 +1,4 @@
-![database-portfolio drawio](https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/21985e6d-6f5c-412d-89e4-4590ba7aea32)# Sunshine Scoops: Icecream Shop Database System
+# Sunshine Scoops: Icecream Shop Database System
 
 https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/8ba604d6-6484-444f-8bf2-4e000f273b90
 

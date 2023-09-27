@@ -84,3 +84,13 @@ Sunshine Scoops is a database-driven website developed for managing an ice cream
 7. Launch your preferred browser and visit http://localhost:52990/ to interact with Sunshine Scoops!
    
 ## 📚 Documentation & References
+
+**Official Documentation**
+
+* [MySQL Official Documentation](https://dev.mysql.com/doc/): Delve into MySQL's extensive resources, covering its features and capabilities.
+  
+* [EJS Documentation](https://ejs.co/): Understand how EJS works, the embedded JavaScript templating engine.
+
+* [Express.js Documentation](https://expressjs.com/en/guide/routing.html): Learn more about the backend framework used for routing and server setup.
+
+* [phpMyAdmin Documentation](https://docs.phpmyadmin.net/en/latest/): Guide on phpMyAdmin, the tool streamlining MySQL administration.

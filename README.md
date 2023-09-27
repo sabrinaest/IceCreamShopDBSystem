@@ -6,6 +6,8 @@ https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/8ba604d6-648
 
 ## ✨ Features
 
+## 📐 Database Schema
+
 ## 🛠️ Setup and Installation
 
 ## 📚 Documentation & References

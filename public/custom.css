@@ -1,0 +1,68 @@
+h1 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+table {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  
+}
+
+
+footer {
+    font-size: 0.7rem;
+    line-height: 1.2;
+      margin-top: 20px;
+  margin-bottom: 20px;
+
+}
+
+
+.btn-primary {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.btn-same-size {
+    width: 100px;
+    height: 30px;
+  }
+  
+.order-table  {
+  width: 60%; /* or any other value that suits your needs */
+  margin: 0 auto; /* centers the container horizontally */
+}
+
+.flavor-table  {
+  max-width: 1000px; /* or any other value that suits your needs */
+  margin: 0 auto; /* centers the container horizontally */
+}
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn {
+  background-color: lightgray !important;
+}
+
+input:read-only {
+  background-color: lightgray !important;
+}
+
+.subtotal-field {
+  width: 70%;
+}
+
+.order-instructions {
+  margin-left: 20px;
+  padding: 0 10px;
+}
+
+.order-instructions-heading {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}

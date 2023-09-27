@@ -8,7 +8,7 @@ https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/8ba604d6-648
 
 ## 📐 Database Design
 
-![image](https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/40fd6556-49a2-47ae-9bbd-d8d589efd962)
+![image](https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/838c371e-9963-4b76-acf2-5b8b8bf3df5e)
 
 ## 🛠️ Setup and Installation
 

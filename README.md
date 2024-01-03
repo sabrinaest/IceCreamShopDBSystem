@@ -45,7 +45,7 @@ Sunshine Scoops is a database-driven website developed for managing an ice cream
    ```
 
 4. Setup Database:
-   * Launch you database management tool (eg. phpMyAdmin).
+   * Launch your database management tool (eg. phpMyAdmin).
    * Create a new database named 'sunshinescoops'.
    * Import the provided DDL and DML scripts to structure and populate the database.
 

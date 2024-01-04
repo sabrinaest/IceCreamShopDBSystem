@@ -1,4 +1,4 @@
-# Sunshine Scoops: Icecream Shop Database System
+# Sunshine Scoops: Ice Cream Shop Database System
 
 https://github.com/sabrinaest/IceCreamShopDBSystem/assets/102570901/8ba604d6-6484-444f-8bf2-4e000f273b90
 
